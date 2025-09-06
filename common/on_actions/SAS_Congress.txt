@@ -1,8 +1,7 @@
 on_actions = {
 	on_startup = {
 		effect = {
-			FRA = {
-				# You can put this in the country's history file alternatively too.
+			USA = {
 				SAS_CongressSetup_effect = yes
 			}
 		}

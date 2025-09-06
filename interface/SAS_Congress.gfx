@@ -1,0 +1,7 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_SAS_congress_parties_icon"
+		texturefile = "gfx/interface/SAS_congress_parties.dds"
+		noOfFrames = 4
+	}
+}

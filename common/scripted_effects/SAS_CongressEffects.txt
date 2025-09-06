@@ -1,4 +1,4 @@
-# The following scripted effect sets-up the parliament at game start.
+# The following scripted effect sets-up congress at game start.
 SAS_CongressSetup_effect = {
 	# Sets up the number of seats in both chambers of congress
 
@@ -37,6 +37,7 @@ SAS_CongressSetup_effect = {
 	SAS_CalculateSupport_effect = yes
 }
 
+# This effect reloads congress - should be used whenever seats are changed
 SAS_reloadCongress_effect = {
 	# Set up the positions for the seats in the house of representatives and the senate
 	SAS_RepresentativesPositions_effect = yes
@@ -120,7 +121,7 @@ SAS_SenateReload_effect = {
 	clear_array = temp_seat
 }
 
-# Effect to udpate the representative seats
+# Effect to udpate the representative seats - optional
 SAS_ModifyRepresentativeSeat_effect = {
 	subtract_from_temp_variable = { temp_member = 1 }
 
@@ -202,7 +203,7 @@ SAS_ModifyRepresentativeSeat_effect = {
 	SAS_RepresentativesReload_effect = yes
 }
 
-# Effect to udpate the senate seats
+# Effect to udpate the senate seats - optional
 SAS_ModifySenateSeat_effect = {
 	subtract_from_temp_variable = { temp_member = 1 }
 
@@ -300,6 +301,8 @@ SAS_CongressClearArrays_effect = {
 
 #  Effect to generate house of representatives positions
 SAS_RepresentativesPositions_effect = {
+	clear_array = representatives_x_array
+	clear_array = representatives_y_array
 	add_to_array = { representatives_x_array = 0 }
 	add_to_array = { representatives_y_array = 189 }
 	add_to_array = { representatives_x_array = 11 }
@@ -1174,6 +1177,8 @@ SAS_RepresentativesPositions_effect = {
 
 #  Effect to generate senate positions
 SAS_SenatePositions_effect = {
+	clear_array = senate_x_array
+	clear_array = senate_y_array
 	add_to_array = { senate_x_array = 0 }
 	add_to_array = { senate_y_array = 109 }
 	add_to_array = { senate_x_array = 13 }
@@ -1818,6 +1823,150 @@ SAS_House_DecreaseRepSupport_large_effect = {
 			republican_support_tempvar = 0
 		}
 	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to increase democratic seats in the house of representatives
+SAS_House_IncreaseDemocraticSeats_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# The new seats will ALWAYS support the government IF the president is democratic. Otherwise, they won't.
+	if = {
+		limit = {
+			OR = {
+				has_country_leader_ideology = liberalism
+				has_country_leader_ideology = socialism
+			}
+		}
+		add_to_temp_variable = {
+			democratic_support_tempvar = seat_change_tempvar
+		}
+	}
+	else = {
+		add_to_temp_variable = {
+			democratic_opposition_tempvar = seat_change_tempvar
+		}
+	}
+	# Hand the change in republicans seats - remove FIRST from opposition then into support
+	if = {
+		limit = {
+			OR = {
+				check_variable = {
+					republican_opposition_tempvar > seat_change_tempvar
+				}
+				check_variable = {
+					republican_opposition_tempvar = seat_change_tempvar
+				}
+			}
+		}
+		subtract_from_temp_variable = {
+			republican_opposition_tempvar = seat_change_tempvar
+		}
+	}
+	else = {
+		subtract_from_variable = {
+			seat_change_tempvar = republican_opposition_tempvar
+		}
+		set_temp_variable = {
+			republican_opposition_tempvar = 0
+		}
+		subtract_from_temp_variable = {
+			republican_support_tempvar = seat_change_tempvar
+		}
+	}
+
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to increase republican seats in the house of representatives
+SAS_House_IncreaseRepublicanSeats_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# The new seats will ALWAYS support the government IF the president is republican. Otherwise, they won't.
+	if = {
+		limit = {
+			OR = {
+				has_country_leader_ideology = populism
+				has_country_leader_ideology = conservatism
+			}
+		}
+		add_to_temp_variable = {
+			republican_support_tempvar = seat_change_tempvar
+		}
+	}
+	else = {
+		add_to_temp_variable = {
+			republican_opposition_tempvar = seat_change_tempvar
+		}
+	}
+	# Hand the change in democratic seats - remove FIRST from opposition then into support
+	if = {
+		limit = {
+			OR = {
+				check_variable = {
+					democratic_opposition_tempvar > seat_change_tempvar
+				}
+				check_variable = {
+					democratic_opposition_tempvar = seat_change_tempvar
+				}
+			}
+		}
+		subtract_from_temp_variable = {
+			democratic_opposition_tempvar = seat_change_tempvar
+		}
+	}
+	else = {
+		subtract_from_variable = {
+			seat_change_tempvar = democratic_opposition_tempvar
+		}
+		set_temp_variable = {
+			democratic_opposition_tempvar = 0
+		}
+		subtract_from_temp_variable = {
+			democratic_support_tempvar = seat_change_tempvar
+		}
+	}
+
 	# Clear the arrays, and rebuild them with the new values
 	clear_array = representatives_seat_array
 

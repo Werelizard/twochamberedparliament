@@ -1,0 +1,30 @@
+defined_text = {
+	name = GetCongressAffiliation
+	text = {
+		trigger = {
+			check_variable = { v = 1 }
+		}
+		localization_key = democrats_opp
+	}
+	text = {
+		trigger = {
+			check_variable = { v = 2 }
+		}
+		localization_key = democrats_sup
+	}
+	text = {
+		trigger = {
+			check_variable = { v = 3 }
+		}
+		localization_key = republicans_sup
+	}
+	text = {
+		trigger = {
+			check_variable = { v = 4 }
+		}
+		localization_key = republicans_opp
+	}
+	text = {
+		localization_key = "Error"
+	}
+}

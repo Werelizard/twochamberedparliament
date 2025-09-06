@@ -1,0 +1,15 @@
+﻿l_english:
+
+ # Decision Category
+  SAS_congress_cat:0 "Congress"
+  SAS_congress_cat_desc:0 ""
+
+ # Interface
+  SAS_Senate_title:0 "Senate"
+  SAS_House_title:0 "House of Representatives"
+  SAS_CongressSeats_tt:0 "[GetCongressAffiliation]"
+
+  democrats_opp:0 "This seat is aligned with the §2Democratic coalition§!, but is currently in the opposition."
+  democrats_sup:0 "This seat is aligned with the §2Democratic coalition§!, and supports the government."
+  republicans_sup:0 "This seat is aligned with the §tRepublican coalition§!, and supports the government."
+  republicans_opp:0 "This seat is aligned with the §tRepublican coalition§!, but is currently in the opposition."

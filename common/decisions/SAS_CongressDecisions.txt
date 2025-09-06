@@ -1,0 +1,22 @@
+SAS_congress_cat = {
+	SAS_increase_dem_support_test = {
+		complete_effect = {
+			SAS_House_IncreaseDemSupport_small_effect = yes
+		}
+	}
+	SAS_decrease_dem_support_test = {
+		complete_effect = {
+			SAS_House_DecreaseDemSupport_small_effect = yes
+		}
+	}
+	SAS_increase_rep_support_test = {
+		complete_effect = {
+			SAS_House_IncreaseRepSupport_small_effect = yes
+		}
+	}
+	SAS_decrease_rep_support_test = {
+		complete_effect = {
+			SAS_House_DecreaseRepSupport_small_effect = yes
+		}
+	}
+}

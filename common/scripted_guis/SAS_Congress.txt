@@ -1,0 +1,34 @@
+scripted_gui = {
+	SAS_congress_gui = {
+		context_type = decision_category
+		window_name = "SAS_Congress_Container"
+
+		dynamic_lists = {
+			SAS_Senate_Main_Grid = {
+				array = senate_main_array
+				index = senate_main_index
+				change_scope = no
+				entry_container = SAS_Senate_main_entry
+			}
+			SAS_House_Main_Grid = {
+				array = representatives_main_array
+				index = representatives_main_index
+				change_scope = no
+				entry_container = SAS_House_main_entry
+			}
+		}
+
+		properties = {
+			SAS_Senate_Main_Icon = {
+				frame = v
+				x = senate_x_array^senate_main_index
+				y = senate_y_array^senate_main_index
+			}
+			SAS_House_Main_Icon = {
+				frame = v
+				x = representatives_x_array^representatives_main_index
+				y = representatives_y_array^representatives_main_index
+			}
+		}
+	}
+}

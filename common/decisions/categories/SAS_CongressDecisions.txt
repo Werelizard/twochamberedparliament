@@ -1,0 +1,10 @@
+SAS_congress_cat = {
+	icon = usa_congress
+
+	allowed = { original_tag = USA }
+
+	priority = 1000
+
+	scripted_gui = SAS_congress_gui
+	visible_when_empty = yes
+}
