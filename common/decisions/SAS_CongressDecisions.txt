@@ -19,4 +19,22 @@ SAS_congress_cat = {
 			SAS_House_DecreaseRepSupport_small_effect = yes
 		}
 	}
+
+	SAS_add_dem_seats_test = {
+		complete_effect = {
+			set_temp_variable = {
+				seat_change_tempvar = 5
+			}
+			SAS_House_IncreaseDemocraticSeats_effect = yes
+		}
+	}
+
+	SAS_add_rep_seats_test = {
+		complete_effect = {
+			set_temp_variable = {
+				seat_change_tempvar = 5
+			}
+			SAS_House_IncreaseRepublicanSeats_effect = yes
+		}
+	}
 }

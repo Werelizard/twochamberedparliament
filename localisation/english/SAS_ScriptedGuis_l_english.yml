@@ -1,15 +1,44 @@
 ﻿l_english:
 
- # Decision Category
-  SAS_congress_cat:0 "Congress"
-  SAS_congress_cat_desc:0 ""
+# Decision Category
+ SAS_congress_cat:0 "Congress"
+ SAS_congress_cat_desc:0 "Democrat opposition: [?representatives_seat_array^0]\nDemocrat support: [?representatives_seat_array^1]\nRepublican opposition: [?representatives_seat_array^3]\nRepublican support: [?representatives_seat_array^2]"
 
- # Interface
-  SAS_Senate_title:0 "Senate"
-  SAS_House_title:0 "House of Representatives"
-  SAS_CongressSeats_tt:0 "[GetCongressAffiliation]"
+# Interface
+ SAS_Senate_title:0 "Senate"
+ SAS_House_title:0 "House of Representatives"
+ SAS_CongressSeats_tt:0 "[GetCongressAffiliation]"
 
-  democrats_opp:0 "This seat is aligned with the §2Democratic coalition§!, but is currently in the opposition."
-  democrats_sup:0 "This seat is aligned with the §2Democratic coalition§!, and supports the government."
-  republicans_sup:0 "This seat is aligned with the §tRepublican coalition§!, and supports the government."
-  republicans_opp:0 "This seat is aligned with the §tRepublican coalition§!, but is currently in the opposition."
+ democrats_opp:0 "This seat is aligned with the §2Democratic coalition§!, but is currently in the opposition."
+ democrats_sup:0 "This seat is aligned with the §2Democratic coalition§!, and supports the government."
+ republicans_sup:0 "This seat is aligned with the §tRepublican coalition§!, and supports the government."
+ republicans_opp:0 "This seat is aligned with the §tRepublican coalition§!, but is currently in the opposition."
+
+# Tooltips
+ 
+ SAS_Senate_IncreaseDemocraticSeats_loyal_tt:0 "The §2Democratic coalition§! will gain §Y[?seat_change_tempvar]§! senators. They will be §Gsupportive§! of the government."
+ SAS_Senate_IncreaseDemocraticSeats_notloyal_tt:0 "The §2Democratic coalition§! will gain §Y[?seat_change_tempvar]§! senators. They will join the §Ropposition§!."
+ SAS_Senate_IncreaseRepublicanSeats_loyal_tt:0 "The §tRepublican coalition§! will gain §Y[?seat_change_tempvar]§! senators. They will be §Gsupportive§! of the government."
+ SAS_Senate_IncreaseRepublicanSeats_notloyal_tt:0 ""The §tRepublican coalition§! will gain §Y[?seat_change_tempvar]§! senators. They will join the §Ropposition§!."
+ SAS_House_IncreaseDemocraticSeats_loyal_tt:0 "The §2Democratic coalition§! will gain §Y[?seat_change_tempvar]§! representatives. They will be §Gsupportive§! of the government."
+ SAS_House_IncreaseDemocraticSeats_notloyal_tt:0 "The §2Democratic coalition§! will gain §Y[?seat_change_tempvar]§! representatives. They will join the §Ropposition§!."
+ SAS_House_IncreaseRepublicanSeats_loyal_tt:0 "The §tRepublican coalition§! will gain §Y[?seat_change_tempvar]§! representatives. They will be §Gsupportive§! of the government."
+ SAS_House_IncreaseRepublicanSeats_notloyal_tt:0 "The §tRepublican coalition§! will gain §Y[?seat_change_tempvar]§! representatives. They will join the §Ropposition§!."
+
+ SAS_House_IncreaseDemSupport_small_tt:0 "Up to §Y5§! §2Democratic§! representatives will move to §Gsupport§! the government."
+ SAS_House_IncreaseDemSupport_large_tt:0 "Up to §Y8§! §2Democratic§! representatives will move to §Gsupport§! the government."
+ SAS_House_IncreaseRepSupport_small_tt:0 "Up to §Y5§! §tRepublican§! representatives will move to §Gsupport§! the government."
+ SAS_House_IncreaseRepSupport_large_tt:0 "Up to §Y8§! §tRepublican§! representatives will move to §Gsupport§! the government."
+ SAS_House_DecreaseDemSupport_small_tt:0 "Up to §Y6§! §2Democratic§! representatives will now §Roppose§! the government."
+ SAS_House_DecreaseDemSupport_large_tt:0 "Up to §Y10§! §2Democratic§! representatives will now §Roppose§! the government."
+ SAS_House_DecreaseRepSupport_small_tt:0 "Up to §Y6§! §tRepublican§! representatives will now §Roppose§! the government."
+ SAS_House_DecreaseRepSupport_large_tt:0 "Up to §Y10§! §tRepublican§! representatives will now §Roppose§! the government."
+
+ SAS_Senate_IncreaseDemSupport_small_tt:0 "Up to §Y2§! §2Democratic§! senators will move to §Gsupport§! the government."
+ SAS_Senate_IncreaseDemSupport_large_tt:0 "Up to §Y4§! §2Democratic§! senators will move to §Gsupport§! the government."
+ SAS_Senate_IncreaseRepSupport_small_tt:0 "Up to §Y2§! §tRepublican§! senators will move to §Gsupport§! the government."
+ SAS_Senate_IncreaseRepSupport_large_tt:0 "Up to §Y4§! §tRepublican§! senators will move to §Gsupport§! the government."
+ SAS_Senate_DecreaseDemSupport_small_tt:0 "Up to §Y2§! §2Democratic§! senators will now §Roppose§! the government."
+ SAS_Senate_DecreaseDemSupport_large_tt:0 "Up to §Y4§! §2Democratic§! senators will now §Roppose§! the government."
+ SAS_Senate_DecreaseRepSupport_small_tt:0 "Up to §Y2§! §tRepublican§! senators will now §Roppose§! the government."
+ SAS_Senate_DecreaseRepSupport_large_tt:0 "Up to §Y4§! §tRepublican§! senators will now §Roppose§! the government."
