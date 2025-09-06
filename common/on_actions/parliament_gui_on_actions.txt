@@ -1,0 +1,10 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			FRA = {
+				# You can put this in the country's history file alternatively too.
+				SAS_CongressSetup_effect = yes
+			}
+		}
+	}
+}
