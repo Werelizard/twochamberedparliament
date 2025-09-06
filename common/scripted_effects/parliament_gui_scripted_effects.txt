@@ -32,6 +32,22 @@ SAS_CongressSetup_effect = {
 	# Update the Congress GUI
 	SAS_RepresentativesReload_effect = yes
 	SAS_SenateReload_effect = yes
+
+	# Calculate congress support
+	SAS_CalculateSupport_effect = yes
+}
+
+SAS_reloadCongress_effect = {
+	# Set up the positions for the seats in the house of representatives and the senate
+	SAS_RepresentativesPositions_effect = yes
+	SAS_SenatePositions_effect = yes
+
+	# Update the Congress GUI
+	SAS_RepresentativesReload_effect = yes
+	SAS_SenateReload_effect = yes
+
+	# Calculate congress support
+	SAS_CalculateSupport_effect = yes
 }
 
 # Generates the GUI for the House of Representatives
@@ -1348,4 +1364,876 @@ SAS_SenatePositions_effect = {
 	add_to_array = { senate_y_array = 109 }
 	add_to_array = { senate_x_array = 227 }
 	add_to_array = { senate_y_array = 109 }
+}
+
+# Effect to recalculate support in both chambers
+SAS_CalculateSupport_effect = {
+	# Determine the TOTAL number of seats in the house
+	set_variable = {
+		house_total_seats_var = 0
+	}
+	add_to_variable = {
+		house_total_seats_var = representatives_seat_array^1
+	}
+	add_to_variable = {
+		house_total_seats_var = representatives_seat_array^2
+	}
+	add_to_variable = {
+		house_total_seats_var = representatives_seat_array^3
+	}
+	add_to_variable = {
+		house_total_seats_var = representatives_seat_array^4
+	}
+	# Determine the SUPPORTIVE number of seats in the house
+	set_variable = {
+		house_support_seats_var = 0
+	}
+	add_to_variable = {
+		house_support_seats_var = representatives_seat_array^2
+	}
+	add_to_variable = {
+		house_support_seats_var = representatives_seat_array^3
+	}
+	# Determine the TOTAL number of seats in the house
+	set_variable = {
+		senate_total_seats_var = 0
+	}
+	add_to_variable = {
+		senate_total_seats_var = senate_seat_array^1
+	}
+	add_to_variable = {
+		senate_total_seats_var = senate_seat_array^2
+	}
+	add_to_variable = {
+		senate_total_seats_var = senate_seat_array^3
+	}
+	add_to_variable = {
+		senate_total_seats_var = senate_seat_array^4
+	}
+	# Determine the SUPPORTIVE number of seats in the house
+	set_variable = {
+		senate_support_seats_var = 0
+	}
+	add_to_variable = {
+		senate_support_seats_var = senate_seat_array^2
+	}
+	add_to_variable = {
+		senate_support_seats_var = senate_seat_array^3
+	}
+}
+
+##     ##  #######  ##     ##  ######  ######## 
+##     ## ##     ## ##     ## ##    ## ##       
+##     ## ##     ## ##     ## ##       ##       
+######### ##     ## ##     ##  ######  ######   
+##     ## ##     ## ##     ##       ## ##       
+##     ## ##     ## ##     ## ##    ## ##       
+##     ##  #######   #######   ######  ######## 
+
+# Effect to add DEMOCRATIC support in the house of representatives. Up to 5 democrats move from the opposition to supporting the government.
+SAS_House_IncreaseDemSupport_small_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# If there's AT LEAST five un-supportive democrats
+	if = {
+		limit = {
+			check_variable = {
+				democratic_opposition_tempvar > 4
+			}
+		}
+		add_to_temp_variable = {
+			democratic_support_tempvar = 5
+		}
+		subtract_from_temp_variable = {
+			democratic_opposition_tempvar = 5
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			democratic_support_tempvar = democratic_opposition_tempvar
+		}
+		set_temp_variable = {
+			democratic_opposition_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to add DEMOCRATIC support in the house of representatives. Up to 8 democrats move from the opposition to supporting the government.
+SAS_House_IncreaseDemSupport_large_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# If there's AT LEAST eight un-supportive democrats
+	if = {
+		limit = {
+			check_variable = {
+				democratic_opposition_tempvar > 7
+			}
+		}
+		add_to_temp_variable = {
+			democratic_support_tempvar = 8
+		}
+		subtract_from_temp_variable = {
+			democratic_opposition_tempvar = 8
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			democratic_support_tempvar = democratic_opposition_tempvar
+		}
+		set_temp_variable = {
+			democratic_opposition_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to add REPUBLICAN support in the house of representatives. Up to 5 republicans move from the opposition to supporting the government.
+SAS_House_IncreaseRepSupport_small_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# If there's AT LEAST five un-supportive republicans
+	if = {
+		limit = {
+			check_variable = {
+				republican_opposition_tempvar > 4
+			}
+		}
+		add_to_temp_variable = {
+			republican_support_tempvar = 5
+		}
+		subtract_from_temp_variable = {
+			republican_opposition_tempvar = 5
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			republican_support_tempvar = republican_opposition_tempvar
+		}
+		set_temp_variable = {
+			republican_opposition_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to add REPUBLICAN support in the house of representatives. Up to 8 republicans move from the opposition to supporting the government.
+SAS_House_IncreaseRepSupport_large_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# If there's AT LEAST eight un-supportive republicans
+	if = {
+		limit = {
+			check_variable = {
+				republican_opposition_tempvar > 7
+			}
+		}
+		add_to_temp_variable = {
+			republican_support_tempvar = 8
+		}
+		subtract_from_temp_variable = {
+			republican_opposition_tempvar = 8
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			republican_support_tempvar = republican_opposition_tempvar
+		}
+		set_temp_variable = {
+			republican_opposition_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to reduce DEMOCRATIC support in the house of representatives. Up to 6 democrats move to oppose the government.
+SAS_House_DecreaseDemSupport_small_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# If there's AT LEAST six supportive democrats
+	if = {
+		limit = {
+			check_variable = {
+				democratic_support_tempvar > 5
+			}
+		}
+		add_to_temp_variable = {
+			democratic_opposition_tempvar = 6
+		}
+		subtract_from_temp_variable = {
+			democratic_support_tempvar = 6
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			democratic_opposition_tempvar = democratic_support_tempvar
+		}
+		set_temp_variable = {
+			democratic_support_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to reduce DEMOCRATIC support in the house of representatives. Up to 10 democrats move to oppose the government.
+SAS_House_DecreaseDemSupport_large_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# If there's AT LEAST six supportive democrats
+	if = {
+		limit = {
+			check_variable = {
+				democratic_support_tempvar > 9
+			}
+		}
+		add_to_temp_variable = {
+			democratic_opposition_tempvar = 10
+		}
+		subtract_from_temp_variable = {
+			democratic_support_tempvar = 10
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			democratic_opposition_tempvar = democratic_support_tempvar
+		}
+		set_temp_variable = {
+			democratic_support_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to reduce REPUBLICAN support in the house of representatives. Up to 6 republicans move to oppose the government.
+SAS_House_DecreaseRepSupport_small_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# If there's AT LEAST six supportive republicans
+	if = {
+		limit = {
+			check_variable = {
+				republican_support_tempvar > 5
+			}
+		}
+		add_to_temp_variable = {
+			republican_opposition_tempvar = 6
+		}
+		subtract_from_temp_variable = {
+			republican_support_tempvar = 6
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			republican_opposition_tempvar = republican_support_tempvar
+		}
+		set_temp_variable = {
+			republican_support_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to reduce REPUBLICAN support in the house of representatives. Up to 10 republicans move to oppose the government.
+SAS_House_DecreaseRepSupport_large_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = representatives_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = representatives_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = representatives_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = representatives_seat_array^4
+	}
+	# If there's AT LEAST six supportive republicans
+	if = {
+		limit = {
+			check_variable = {
+				republican_support_tempvar > 9
+			}
+		}
+		add_to_temp_variable = {
+			republican_opposition_tempvar = 10
+		}
+		subtract_from_temp_variable = {
+			republican_support_tempvar = 10
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			republican_opposition_tempvar = republican_support_tempvar
+		}
+		set_temp_variable = {
+			republican_support_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = representatives_seat_array
+
+	add_to_array = { representatives_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { representatives_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { representatives_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+ ######  ######## ##    ##    ###    ######## ######## 
+##    ## ##       ###   ##   ## ##      ##    ##       
+##       ##       ####  ##  ##   ##     ##    ##       
+ ######  ######   ## ## ## ##     ##    ##    ######   
+      ## ##       ##  #### #########    ##    ##       
+##    ## ##       ##   ### ##     ##    ##    ##       
+ ######  ######## ##    ## ##     ##    ##    ######## 
+
+# Effect to add DEMOCRATIC support in the senate. Up to 2 democrats move from the opposition to supporting the government.
+SAS_Senate_IncreaseDemSupport_small_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = senate_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = senate_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = senate_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = senate_seat_array^4
+	}
+	# If there's AT LEAST two un-supportive democrats
+	if = {
+		limit = {
+			check_variable = {
+				democratic_opposition_tempvar > 1
+			}
+		}
+		add_to_temp_variable = {
+			democratic_support_tempvar = 2
+		}
+		subtract_from_temp_variable = {
+			democratic_opposition_tempvar = 2
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			democratic_support_tempvar = democratic_opposition_tempvar
+		}
+		set_temp_variable = {
+			democratic_opposition_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = senate_seat_array
+
+	add_to_array = { senate_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { senate_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { senate_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { senate_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to add DEMOCRATIC support in the senate. Up to 4 democrats move from the opposition to supporting the government.
+SAS_Senate_IncreaseDemSupport_large_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = senate_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = senate_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = senate_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = senate_seat_array^4
+	}
+	# If there's AT LEAST four un-supportive democrats
+	if = {
+		limit = {
+			check_variable = {
+				democratic_opposition_tempvar > 3
+			}
+		}
+		add_to_temp_variable = {
+			democratic_support_tempvar = 4
+		}
+		subtract_from_temp_variable = {
+			democratic_opposition_tempvar = 4
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			democratic_support_tempvar = democratic_opposition_tempvar
+		}
+		set_temp_variable = {
+			democratic_opposition_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = senate_seat_array
+
+	add_to_array = { senate_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { senate_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { senate_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { senate_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to add REPUBLICAN support in the senate. Up to 2 republicans move from the opposition to supporting the government.
+SAS_Senate_IncreaseRepSupport_small_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = senate_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = senate_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = senate_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = senate_seat_array^4
+	}
+	# If there's AT LEAST two un-supportive democrats
+	if = {
+		limit = {
+			check_variable = {
+				republican_opposition_tempvar > 1
+			}
+		}
+		add_to_temp_variable = {
+			republican_support_tempvar = 2
+		}
+		subtract_from_temp_variable = {
+			republican_opposition_tempvar = 2
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			republican_support_tempvar = republican_opposition_tempvar
+		}
+		set_temp_variable = {
+			republican_opposition_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = senate_seat_array
+
+	add_to_array = { senate_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { senate_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { senate_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { senate_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to add REPUBLICAN support in the senate. Up to 4 republicans move from the opposition to supporting the government.
+SAS_Senate_IncreaseRepSupport_large_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = senate_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = senate_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = senate_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = senate_seat_array^4
+	}
+	# If there's AT LEAST four un-supportive republicans
+	if = {
+		limit = {
+			check_variable = {
+				republican_opposition_tempvar > 3
+			}
+		}
+		add_to_temp_variable = {
+			republican_support_tempvar = 4
+		}
+		subtract_from_temp_variable = {
+			republican_opposition_tempvar = 4
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			republican_support_tempvar = republican_opposition_tempvar
+		}
+		set_temp_variable = {
+			republican_opposition_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = senate_seat_array
+
+	add_to_array = { senate_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { senate_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { senate_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { senate_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to remove DEMOCRATIC support in the senate. Up to 2 democrats move to oppose the government.
+SAS_Senate_DecreaseDemSupport_small_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = senate_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = senate_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = senate_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = senate_seat_array^4
+	}
+	# If there's AT LEAST two supportive democrats
+	if = {
+		limit = {
+			check_variable = {
+				democratic_support_tempvar > 2
+			}
+		}
+		add_to_temp_variable = {
+			democratic_opposition_tempvar = 2
+		}
+		subtract_from_temp_variable = {
+			democratic_support_tempvar = 2
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			democratic_opposition_tempvar = democratic_support_tempvar
+		}
+		set_temp_variable = {
+			democratic_support_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = senate_seat_array
+
+	add_to_array = { senate_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { senate_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { senate_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { senate_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to remove DEMOCRATIC support in the senate. Up to 4 democrats move to oppose the government.
+SAS_Senate_DecreaseDemSupport_large_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = senate_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = senate_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = senate_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = senate_seat_array^4
+	}
+	# If there's AT LEAST four supportive democrats
+	if = {
+		limit = {
+			check_variable = {
+				democratic_support_tempvar > 3
+			}
+		}
+		add_to_temp_variable = {
+			democratic_opposition_tempvar = 4
+		}
+		subtract_from_temp_variable = {
+			democratic_support_tempvar = 4
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			democratic_opposition_tempvar = democratic_support_tempvar
+		}
+		set_temp_variable = {
+			democratic_support_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = senate_seat_array
+
+	add_to_array = { senate_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { senate_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { senate_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { senate_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to remove REPUBLICAN support in the senate. Up to 2 republicans move to oppose the government.
+SAS_Senate_DecreaseRepSupport_small_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = senate_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = senate_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = senate_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = senate_seat_array^4
+	}
+	# If there's AT LEAST two supportive republicans
+	if = {
+		limit = {
+			check_variable = {
+				republican_support_tempvar > 1
+			}
+		}
+		add_to_temp_variable = {
+			republican_opposition_tempvar = 2
+		}
+		subtract_from_temp_variable = {
+			republican_support_tempvar = 2
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			republican_opposition_tempvar = republican_support_tempvar
+		}
+		set_temp_variable = {
+			republican_support_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = senate_seat_array
+
+	add_to_array = { senate_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { senate_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { senate_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { senate_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
+}
+
+# Effect to remove REPUBLICAN support in the senate. Up to 4 republicans move to oppose the government.
+SAS_Senate_DecreaseRepSupport_large_effect = {
+	# First grab the current values for the seats
+	set_temp_variable = {
+		democratic_opposition_tempvar = senate_seat_array^1
+	}
+	set_temp_variable = {
+		democratic_support_tempvar = senate_seat_array^2
+	}
+	set_temp_variable = {
+		republican_support_tempvar = senate_seat_array^3
+	}
+	set_temp_variable = {
+		republican_opposition_tempvar = senate_seat_array^4
+	}
+	# If there's AT LEAST two supportive republicans
+	if = {
+		limit = {
+			check_variable = {
+				republican_support_tempvar > 3
+			}
+		}
+		add_to_temp_variable = {
+			republican_opposition_tempvar = 2
+		}
+		subtract_from_temp_variable = {
+			republican_support_tempvar = 2
+		}
+	}
+	# Otherwise
+	else = {
+		add_to_temp_variable = {
+			republican_opposition_tempvar = republican_support_tempvar
+		}
+		set_temp_variable = {
+			republican_support_tempvar = 0
+		}
+	}
+	# Clear the arrays, and rebuild them with the new values
+	clear_array = senate_seat_array
+
+	add_to_array = { senate_seat_array = democratic_opposition_tempvar } # Democrats (opposition)
+	add_to_array = { senate_seat_array = democratic_support_tempvar } # Democrats (support)
+	add_to_array = { senate_seat_array = republican_support_tempvar }  # Republicans (support)
+	add_to_array = { senate_seat_array = republican_opposition_tempvar } # Republicans (opposition)
+
+	# Re-Load the UI
+	SAS_reloadCongress_effect = yes
 }
