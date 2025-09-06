@@ -1942,7 +1942,7 @@ SAS_House_IncreaseDemocraticSeats_effect = {
 		}
 	}
 	else = {
-		subtract_from_variable = {
+		subtract_from_temp_variable = {
 			seat_change_tempvar = republican_opposition_tempvar
 		}
 		set_temp_variable = {
@@ -2026,7 +2026,7 @@ SAS_House_IncreaseRepublicanSeats_effect = {
 		}
 	}
 	else = {
-		subtract_from_variable = {
+		subtract_from_temp_variable = {
 			seat_change_tempvar = democratic_opposition_tempvar
 		}
 		set_temp_variable = {
@@ -2526,7 +2526,7 @@ SAS_Senate_IncreaseDemocraticSeats_effect = {
 		}
 	}
 	else = {
-		subtract_from_variable = {
+		subtract_from_temp_variable = {
 			seat_change_tempvar = republican_opposition_tempvar
 		}
 		set_temp_variable = {
@@ -2610,7 +2610,7 @@ SAS_Senate_IncreaseRepublicanSeats_effect = {
 		}
 	}
 	else = {
-		subtract_from_variable = {
+		subtract_from_temp_variable = {
 			seat_change_tempvar = democratic_opposition_tempvar
 		}
 		set_temp_variable = {

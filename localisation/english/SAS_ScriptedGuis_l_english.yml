@@ -2,7 +2,7 @@
 
 # Decision Category
  SAS_congress_cat:0 "Congress"
- SAS_congress_cat_desc:0 "Democrat opposition: [?representatives_seat_array^0]\nDemocrat support: [?representatives_seat_array^1]\nRepublican opposition: [?representatives_seat_array^3]\nRepublican support: [?representatives_seat_array^2]"
+ SAS_congress_cat_desc:0 "Democrat opposition: [?representatives_seat_array^0]\nDemocrat support: [?representatives_seat_array^1]\nRepublican opposition: [?representatives_seat_array^3]\nRepublican support: [?representatives_seat_array^2]\n\nHouse support: [?house_support_seats_var]/[?house_total_seats_var]\n\nSenate Support: [?senate_support_seats_var]/[?senate_total_seats_var]"
 
 # Interface
  SAS_Senate_title:0 "Senate"
