@@ -3,13 +3,13 @@ SAS_CongressSetup_effect = {
 	# Sets up the number of seats in both chambers of congress
 
 	# representatives_seat_array and senate_seat_array store the list of seat numbers for each party in the house of representatives and the senate, respectively
-	add_to_array = { representatives_seat_array = 20 } # Democrats (opposition)
-	add_to_array = { representatives_seat_array = 312 } # Democrats (support)
+	add_to_array = { representatives_seat_array = 155 } # Democrats (opposition)
+	add_to_array = { representatives_seat_array = 177 } # Democrats (support)
 	add_to_array = { representatives_seat_array = 10 }  # Republicans (support)
 	add_to_array = { representatives_seat_array = 93 } # Republicans (opposition)
 
-	add_to_array = { senate_seat_array = 28 } # Democrats (opposition)
-	add_to_array = { senate_seat_array = 50 } # Democrats (support)
+	add_to_array = { senate_seat_array = 35 } # Democrats (opposition)
+	add_to_array = { senate_seat_array = 43 } # Democrats (support)
 	add_to_array = { senate_seat_array = 1 }  # Republicans (support)
 	add_to_array = { senate_seat_array = 16 } # Republicans (opposition)
 

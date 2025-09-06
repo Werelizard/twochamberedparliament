@@ -12,7 +12,7 @@
   parliament_member_text:0 "[GetParliamentPartyName] - [?representatives_seat_array^parliament_member_index] Seats"
   parliament_modify_button_tt:0 "§GCtrl+Click§! to add §Y5§! Seats from [GetParliamentPartyName]\n§GShift+Click§! to subtract §Y5§! Seats from [GetParliamentPartyName]"
 
-  party_1_text:0 "§2Democratic§! opposition"
-  party_2_text:0 "§2Democratic§! support"
-  party_3_text:0 "§tRepublican§! support"
-  party_4_text:0 "§tRepublican§! opposition"
+  party_1_text:0 "This seat is aligned with the §2Democratic coalition§!, but is currently in the opposition."
+  party_2_text:0 "This seat is aligned with the §2Democratic coalition§!, and supports the government."
+  party_3_text:0 "This seat is aligned with the §tRepublican coalition§!, and supports the government."
+  party_4_text:0 "This seat is aligned with the §tRepublican coalition§!, but is currently in the opposition."
