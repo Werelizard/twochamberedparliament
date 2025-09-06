@@ -39,6 +39,20 @@ SAS_CongressSetup_effect = {
 
 # This effect reloads congress - should be used whenever seats are changed
 SAS_reloadCongress_effect = {
+	clear_array = representatives_member_array
+	clear_array = senate_member_array
+
+	# representatives_member_array and senate_member_array index parties in the house of representatives and the senate, respectively
+	add_to_array = { representatives_member_array = 1 } # Democrats (opposition)
+	add_to_array = { representatives_member_array = 2 } # Democrats (support)
+	add_to_array = { representatives_member_array = 3 } # Republicans (support)
+	add_to_array = { representatives_member_array = 4 } # Republicans (opposition)
+
+	add_to_array = { senate_member_array = 1 } # Democrats (opposition)
+	add_to_array = { senate_member_array = 2 } # Democrats (support)
+	add_to_array = { senate_member_array = 3 } # Republicans (support)
+	add_to_array = { senate_member_array = 4 } # Republicans (opposition)
+
 	# Set up the positions for the seats in the house of representatives and the senate
 	SAS_RepresentativesPositions_effect = yes
 	SAS_SenatePositions_effect = yes
@@ -285,7 +299,7 @@ SAS_ModifySenateSeat_effect = {
 	SAS_senateReload_effect = yes
 }
 
-# Clear all arrays (for debugging)
+# Clear all arrays - unused
 SAS_CongressClearArrays_effect = {
 	clear_array = representatives_main_array
 	clear_array = representatives_member_array
